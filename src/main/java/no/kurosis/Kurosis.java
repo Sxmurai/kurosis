@@ -6,6 +6,7 @@ import no.kurosis.check.CheckRegistry;
 import no.kurosis.data.DataRegistry;
 import no.kurosis.event.listener.bukkit.PlayerJoinQuitListener;
 import no.kurosis.event.listener.packet.InventoryPacketListener;
+import no.kurosis.event.listener.packet.MovePacketListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,9 +29,12 @@ public class Kurosis extends JavaPlugin {
         // load this instance variable
         instance = this;
 
-        // load bukkit events
-        loadBukkitEvent(new PlayerJoinQuitListener());
+        // load bukkit listeners
+        loadBukkitListener(new PlayerJoinQuitListener());
+
+        // add event bus listeners
         BUS.subscribe(new InventoryPacketListener());
+        BUS.subscribe(new MovePacketListener());
 
         // create managers
         checkRegistry = new CheckRegistry();
@@ -66,7 +70,7 @@ public class Kurosis extends JavaPlugin {
      * Loads a bukkit event via the PluginManager
      * @param listenerIn the listener to register
      */
-    private void loadBukkitEvent(Listener listenerIn) {
+    private void loadBukkitListener(Listener listenerIn) {
         getServer().getPluginManager().registerEvents(listenerIn, this);
     }
 

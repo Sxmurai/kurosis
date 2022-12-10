@@ -8,7 +8,19 @@ import no.kurosis.event.events.net.PacketSide;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * A class for injecting into the packet_handler in netty to intercept send/received packets
+ * to analyze them for the anti-cheat
+ *
+ * @author aesthetical
+ * @since 12/10/22
+ */
 public class PlayerPacketInjector {
+
+    /**
+     * Injects the a new packet handler into this bukkit player
+     * @param player the bukkit player
+     */
     public static void inject(Player player) {
         ChannelDuplexHandler handler = new ChannelDuplexHandler() {
             @Override
@@ -34,6 +46,10 @@ public class PlayerPacketInjector {
         pipeline.addBefore("packet_handler", player.getName(), handler);
     }
 
+    /**
+     * Removes the packet handler from this bukkit player
+     * @param player the bukkit player
+     */
     public static void uninject(Player player) {
         Channel channel = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel;
         channel.eventLoop().submit(() -> {

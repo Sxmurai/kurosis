@@ -5,10 +5,16 @@ import no.kurosis.check.aim.AimA;
 import no.kurosis.check.aim.AimB;
 import no.kurosis.check.aim.AimC;
 import no.kurosis.check.autoclicker.AutoClickerA;
+import no.kurosis.check.autoclicker.AutoClickerB;
+import no.kurosis.check.crasher.CrasherA;
 import no.kurosis.check.invalid.InvalidA;
 import no.kurosis.check.invalid.InvalidB;
+import no.kurosis.check.invalid.InvalidC;
 import no.kurosis.check.inventory.*;
+import no.kurosis.check.killaura.KillAuraA;
+import no.kurosis.check.killaura.KillAuraC;
 import no.kurosis.check.move.MoveA;
+import no.kurosis.check.move.MoveB;
 import no.kurosis.check.place.PlaceA;
 import no.kurosis.check.place.PlaceB;
 import no.kurosis.check.timer.TimerA;
@@ -34,9 +40,13 @@ public class CheckRegistry extends ListRegistry<Class<? extends Check>> {
         registry.add(AimC.class);
 
         registry.add(AutoClickerA.class);
+        registry.add(AutoClickerB.class);
+
+        registry.add(CrasherA.class);
 
         registry.add(InvalidA.class);
         registry.add(InvalidB.class);
+        registry.add(InvalidC.class);
 
         registry.add(InventoryA.class);
         registry.add(InventoryB.class);
@@ -44,12 +54,22 @@ public class CheckRegistry extends ListRegistry<Class<? extends Check>> {
         registry.add(InventoryD.class);
         registry.add(InventoryE.class);
 
+        registry.add(KillAuraA.class);
+        registry.add(KillAuraC.class);
+
         registry.add(MoveA.class);
+        registry.add(MoveB.class);
 
         registry.add(PlaceA.class);
         registry.add(PlaceB.class);
 
         registry.add(TimerA.class);
+
+        registry.forEach((clazz) -> {
+            if (clazz.isAnnotationPresent(Experimental.class)) {
+                System.out.println("Check " + clazz.getSimpleName() + " is experimental. It may not work as intended");
+            }
+        });
     }
 
     public void registerChecks(UUID uuid) {

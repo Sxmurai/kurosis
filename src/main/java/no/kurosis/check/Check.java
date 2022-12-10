@@ -13,9 +13,11 @@ public class Check {
 
     private final PlayerData data;
     private final String name;
-    private final double maxVL;
+    private double maxVL;
 
     private double localVL = 0.0;
+
+    private final boolean experimental = getClass().getDeclaredAnnotation(Experimental.class) != null;
 
     /**
      * Creates a new check
@@ -74,6 +76,14 @@ public class Check {
     }
 
     /**
+     * Sets the max violation count this player can have for this check
+     * @param maxVL the new max violation count
+     */
+    public void setMaxVL(double maxVL) {
+        this.maxVL = maxVL;
+    }
+
+    /**
      * Gets the player's player data for this check
      * @return the player data provided
      */
@@ -81,4 +91,11 @@ public class Check {
         return data;
     }
 
+    /**
+     * If the @Experimental annotation was added to this class
+     * @return if this check is experimental
+     */
+    public boolean isExperimental() {
+        return experimental;
+    }
 }
